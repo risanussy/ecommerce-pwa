@@ -55,5 +55,5 @@ Route::get('/products/{product}', [ProductController::class, 'show'])->name('pro
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
-Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::delete('/carty/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::get('/cart/{id}', [CartController::class, 'show'])->name('cart.show');
