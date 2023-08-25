@@ -40,8 +40,17 @@
               <h5 class="card-title">{{ $product->nama }}</h5>
               <p class="card-text">Rp. {{ number_format($product->harga, 0, ',', '.') }}</p>
               <div>
-                <a href="/pay" class="btn btn-primary">Beli</a>
-                <a href="#" class="btn btn-outline-primary"><i class="fa-solid fa-cart-plus"></i></a>
+            <a href="{{ route('products.show', ['product' => $product->id]) }}" class="btn btn-primary">Beli</a>
+            @auth
+            <form action="{{ route('cart.store') }}" method="POST" class="d-inline-block">
+              @csrf
+              <input type="hidden" value="{{ auth()->user()->id }}" name="user_id">
+              <input type="hidden" value="{{ $product->id }}" name="product_id">
+              <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-cart-plus"></i></button>
+            </form>
+            @else
+              <i></i>
+            @endauth
               </div>
             </div>
           </div>

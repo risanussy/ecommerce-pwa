@@ -16,7 +16,7 @@
           <a class="nav-link active" aria-current="page" href="/">Beranda</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/cart"><i class="fa-solid fa-cart-shopping me-2"></i>Keranjang</a>
+          <a class="nav-link" href="/cartpage"><i class="fa-solid fa-cart-shopping me-2"></i>Keranjang</a>
         </li>
       </ul>
       <div class="d-flex align-items-center">

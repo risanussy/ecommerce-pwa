@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,3 +51,9 @@ Route::get('/pay', function () {
 });
 
 Route::resource('/products', ProductController::class);
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::get('/cart/{id}', [CartController::class, 'show'])->name('cart.show');

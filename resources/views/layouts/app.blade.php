@@ -7,7 +7,8 @@
     <!-- Add your CSS links here -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="icon" href="https://cdn.dribbble.com/users/4553005/screenshots/13436219/media/0f0d109e1888047d02e23b5557f79c96.png?resize=1000x750&vertical=center">
-
+    
+    <link rel="manifest" href="manifest.json">
     <!-- Boostrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
@@ -27,6 +28,11 @@
 
     <!-- JS Bootstrap    -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-  
+    
+    <script>
+        if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js');
+        }
+    </script>
 </body>
 </html>
