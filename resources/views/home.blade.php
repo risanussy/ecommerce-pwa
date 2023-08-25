@@ -40,7 +40,7 @@
               <h5 class="card-title">{{ $product->nama }}</h5>
               <p class="card-text">Rp. {{ number_format($product->harga, 0, ',', '.') }}</p>
               <div>
-                <a href="#" class="btn btn-primary">Beli</a>
+                <a href="/pay" class="btn btn-primary">Beli</a>
                 <a href="#" class="btn btn-outline-primary"><i class="fa-solid fa-cart-plus"></i></a>
               </div>
             </div>

@@ -134,4 +134,7 @@
         </div>
     </div>
   </div>
+  <a href="https://wa.me/" style="position: fixed; right: 20px; bottom: 20px; font-size: 60px">
+    <i class="fa-brands fa-square-whatsapp text-success"></i>
+  </a>
 @endsection

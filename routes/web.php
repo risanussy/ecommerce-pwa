@@ -45,4 +45,8 @@ Route::get('/admin/product', function () {
     return view('product');
 });
 
+Route::get('/pay', function () {
+    return view('pay');
+});
+
 Route::resource('/products', ProductController::class);
