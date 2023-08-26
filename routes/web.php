@@ -57,6 +57,7 @@ Route::get('/tq', function () {
 
 Route::resource('/products', ProductController::class);
 Route::post('/sell', [SellController::class, 'store'])->name('sell.store');
+Route::post('/sell', [SellController::class, 'status'])->name('sell.status');
 Route::get('/admin/sell', [SellController::class, 'index'])->name('sell.index');
 Route::resource('/sell', SellController::class);
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');

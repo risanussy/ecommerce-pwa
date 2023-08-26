@@ -31,4 +31,20 @@ class SellController extends Controller
 
         return redirect('tq')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
     }
+
+    public function status(Request $request)
+    {
+        // Validasi input
+        $data = $request->validate([
+            'id' => 'required',
+            'status' => 'required',
+        ]);
+    
+        // Update data produk
+        $sell = Sell::findOrFail($data['id']);
+        $sell->fill($data);
+        $sell->save();
+
+        return redirect()->route('sell.index')->with('success', 'Produk berhasil diperbarui.');
+    }
 }
