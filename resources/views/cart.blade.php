@@ -16,7 +16,7 @@
           </div>
           <div>
             <h5>{{ $cartItem->nama }}</h5>
-            <small>{{ $cartItem->harga }}</small>
+            <small>Rp. {{ number_format($cartItem->harga, 0, ',', '.') }}</small>
           </div>
         </div>
         <div>

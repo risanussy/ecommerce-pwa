@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\SellController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,10 +51,18 @@ Route::get('/pay', function () {
     return view('pay');
 });
 
+Route::get('/tq', function () {
+    return view('tq');
+});
+
 Route::resource('/products', ProductController::class);
+Route::post('/sell', [SellController::class, 'store'])->name('sell.store');
+Route::get('/admin/sell', [SellController::class, 'index'])->name('sell.index');
+Route::resource('/sell', SellController::class);
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
-Route::delete('/carty/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::post('/cart', [CartController::class, 'store'])->name('cart.store') ;
+Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::get('/cart/{id}', [CartController::class, 'show'])->name('cart.show');

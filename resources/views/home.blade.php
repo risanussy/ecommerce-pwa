@@ -2,6 +2,9 @@
 
 @section('content')
   <div class="container pt-4 pb-5">
+      <div class="info">
+
+      </div>
       <div class="px-5 py-3 rounded-3" style="background-color: gainsboro;">
         <div class="d-flex align-items-center">
           <img src="{{ asset('img/plant-doodle.svg') }}" height="120px">
@@ -40,17 +43,17 @@
               <h5 class="card-title">{{ $product->nama }}</h5>
               <p class="card-text">Rp. {{ number_format($product->harga, 0, ',', '.') }}</p>
               <div>
-            <a href="{{ route('products.show', ['product' => $product->id]) }}" class="btn btn-primary">Beli</a>
-            @auth
-            <form action="{{ route('cart.store') }}" method="POST" class="d-inline-block">
-              @csrf
-              <input type="hidden" value="{{ auth()->user()->id }}" name="user_id">
-              <input type="hidden" value="{{ $product->id }}" name="product_id">
-              <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-cart-plus"></i></button>
-            </form>
-            @else
-              <i></i>
-            @endauth
+                @auth
+                  <a href="{{ route('products.show', ['product' => $product->id]) }}" class="btn btn-primary">Beli</a>
+                  <form action="{{ route('cart.store') }}" method="POST" class="d-inline-block">
+                    @csrf
+                    <input type="hidden" value="{{ auth()->user()->id }}" name="user_id">
+                    <input type="hidden" value="{{ $product->id }}" name="product_id">
+                    <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-cart-plus"></i></button>
+                  </form>
+                  @else
+                  <button onclick="login()" class="btn btn-primary">Beli</button>
+                @endauth
               </div>
             </div>
           </div>
@@ -58,4 +61,12 @@
         </div>
       </div>
   </div>
+  <script>
+    let login = () => {
+      document.querySelector('.info').innerHTML = `
+      <div class="alert alert-danger" role="alert">
+        Login Terlebih dahulu
+      </div>`
+    }
+  </script>
 @endsection

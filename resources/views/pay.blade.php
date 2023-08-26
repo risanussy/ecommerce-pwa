@@ -12,10 +12,15 @@
           <p>{{ $product->deskripsi }}</p>
       </div>
       <div class="col">
-        <form>
+        <form action="{{ route('sell.store') }}" method="POST">
+          @csrf
+          <input type="hidden" value="{{ $product->id }}" name="product_id">
+          @auth
+          <input type="hidden" value="{{ auth()->user()->id  }}" name="user_id">
+          @endauth
           <div class="mb-3">
             <label class="form-label">Alamat</label>
-            <textarea class="form-control"></textarea>
+            <textarea class="form-control" name="alamat"></textarea>
           </div>
           <h4 class="mb-3">Pengiriman</h4>
           <div class="d-flex">
@@ -48,7 +53,7 @@
           <div class="mb-3">
             <label class="form-label">Pembayaran</label>
             <input type="text" value="Cash on delivery" class="form-control border-0 ps-0" readonly>
-            <input type="hidden" value="" id="total-val" class="form-control border-0 ps-0" readonly>
+            <input type="hidden" value="" name="total" id="total-val" class="form-control border-0 ps-0" readonly>
             <small>siapkan uang cash untuk pembayaran nanti</small><br>
             <small><b>Total Belanja</b> : <span id="total"></span></small>
           </div>
@@ -64,13 +69,13 @@
   function updateTotal() {
     var deliveryCost = document.querySelector('input[name="send"]:checked').value;
     var productPrice = {{ $product->harga }};
-    var total = parseInt(deliveryCost) + productPrice;
+    var total = parseInt(deliveryCost) + parseInt(productPrice);
     var formatter = new Intl.NumberFormat('id-ID', {
       style: 'currency',
       currency: 'IDR'
     });
     document.getElementById('total').innerHTML = formatter.format(total);
-    document.getElementById('total-val').val = formatter.format(total);
+    document.getElementById('total-val').value = parseInt(total);
   }
 
   // Add event listeners to the delivery options

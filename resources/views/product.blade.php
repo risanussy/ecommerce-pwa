@@ -40,41 +40,7 @@
                     </td>
                     <td>{{ $product->harga }}</td>
                     <td class="w-25 text-justify">{{ $product->deskripsi }}</td>
-                    <td>
-                        <!-- Tombol Edit -->
-                        <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#edit-{{ $loop->index + 1 }}">Edit</button>
-                        <div class="modal fade" id="edit-{{ $loop->index + 1 }}" tabindex="-1" aria-labelledby="editlabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="editlabel">Edit Produk</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="{{ route('products.update', $product->id) }}" method="PUT" enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="mb-3">
-                                                <label for="nama" class="form-label">Nama Produk</label>
-                                                <input type="text" class="form-control" id="nama" name="nama" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="harga" class="form-label">Harga</label>
-                                                <input type="text" class="form-control" id="harga" name="harga" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="deskripsi" class="form-label">Deskripsi</label>
-                                                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                                <button type="submit" class="btn btn-success">Simpan Perubahan</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
+                    <td>                        
                         <!-- Form Hapus -->
                         <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display: inline-block;">
                             @csrf
