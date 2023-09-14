@@ -47,7 +47,13 @@ class AuthController extends Controller
     
         if (Auth::attempt($credentials)) {
             // Jika berhasil login
-            return redirect('/');
+    
+            // Cek apakah pengguna yang login adalah admin
+            if (Auth::user()->name === 'admin') {
+                return redirect('/admin/sell'); // Jika admin, arahkan ke /product
+            } else {
+                return redirect('/'); // Jika bukan admin, arahkan ke halaman utama
+            }
         } else {
             // Jika gagal login
             return back()->withErrors(['message' => 'Invalid credentials']);

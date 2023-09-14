@@ -43,6 +43,10 @@ Route::get('/admin/sell', function () {
     return view('sell');
 });
 
+Route::get('/admin', function () {
+    return view('login');
+});
+
 Route::get('/admin/product', function () {
     return view('product');
 });
