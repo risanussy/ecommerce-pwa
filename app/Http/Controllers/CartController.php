@@ -13,7 +13,7 @@ class CartController extends Controller
         $cartItems = DB::table('cart_items')
             ->join('products', 'cart_items.product_id', '=', 'products.id')
             ->join('users', 'cart_items.user_id', '=', 'users.id')
-            ->select('cart_items.*', 'products.*', 'users.name as user_name')
+            ->select( 'products.*', 'cart_items.*','users.name as user_name')
             ->get();
         return view('cart', compact('cartItems'));
     }
@@ -39,9 +39,17 @@ class CartController extends Controller
 
     public function destroy($id)
     {
-        $cartItem = CartItem::findOrFail($id);
-        $cartItem->delete();
+        // Temukan item keranjang belanja berdasarkan ID
+        $cartItem = CartItem::find($id);
 
-        return redirect()->route('cart.index')->with('success', 'Produk berhasil dihapus dari keranjang.');
+        // Pastikan item ditemukan sebelum menghapusnya
+        if ($cartItem) {
+            $cartItem->delete();
+
+            return redirect()->route('cart.index')->with('success', 'Item berhasil dihapus dari keranjang.');
+        }
+
+        // Jika item tidak ditemukan, Anda dapat mengarahkannya ke halaman yang sesuai
+        return redirect()->route('cart.index')->with('error', 'Item tidak ditemukan.');
     }
 }

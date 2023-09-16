@@ -21,12 +21,12 @@
         </div>
         <div>
           <a href="{{ route('products.show', ['product' => $cartItem->product_id]) }}" class="btn btn-outline-success me-1">Beli</a>
-          <!-- <form action="{{ route('cart.destroy', ['id' => $cartItem->id]) }}" method="POST" style="display: inline-block;">
+          <form action="{{ route('cart.destroy', ['id' => $cartItem->id]) }}" method="POST" style="display: inline-block;">
           <button class="btn btn-outline-danger" value="Delete"><i class="fa-solid fa-trash-can"></i></button>
           @method('delete')
           @csrf
-          </form> -->
-          <button class="btn btn-outline-danger" onclick="del({{ $loop->index }})"><i class="fa-solid fa-trash-can"></i></button>
+          </form>
+          <!-- <button class="btn btn-outline-danger" onclick="del({{ $loop->index }})"><i class="fa-solid fa-trash-can"></i></button> -->
         </div>
       </div>
     </div>
