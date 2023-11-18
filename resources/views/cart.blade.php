@@ -3,6 +3,8 @@
 @section('content')
   <div class="container pt-4 pb-5">
     <h4 class="mb-3">Keranjang.</h4>
+    <button class="btn btn-outline-success me-1">Beli Semua</button>
+    <button class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i></button>
     <hr>
     @if ($cartItems->isEmpty())
         <p>Keranjang belanja kosong.</p>
@@ -10,12 +12,14 @@
     @foreach ($cartItems as $cartItem)
     <div class="card mb-3 crd-{{ $loop->index }}">
       <div class="card-body d-flex justify-content-between align-items-center">
-        <div class="d-flex">
+        <div class="d-flex align-items-center">
+          <input type="checkbox" class="me-3">
           <div class="d-flex justify-content-center align-items-center overflow-hidden me-2" style="width: 100px; height: 60px">
             <img src="{{ asset('product/'.$cartItem->foto) }}" class="card-img-top" width="110%">
           </div>
           <div>
             <h5>{{ $cartItem->nama }}</h5>
+            <h6>Jumlah : {{ $cartItem->jumlah }}</h6>
             <small>Rp. {{ number_format($cartItem->harga, 0, ',', '.') }}</small>
           </div>
         </div>

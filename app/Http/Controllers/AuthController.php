@@ -23,6 +23,8 @@ class AuthController extends Controller
         // Validasi data
         $this->validate($request, [
             'name' => 'required',
+            'alamat' => 'required',
+            'no_hp' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
@@ -30,6 +32,8 @@ class AuthController extends Controller
         // Buat user baru
         $user = User::create([
             'name' => $request->name,
+            'alamat' => $request->alamat,
+            'no_hp' => $request->no_hp,
             'email' => $request->email,
             'password' => bcrypt($request->password), // Enkripsi password
         ]);

@@ -15,9 +15,11 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Beranda</a>
         </li>
+        @auth
         <li class="nav-item">
           <a class="nav-link" href="/cart"><i class="fa-solid fa-cart-shopping me-2"></i>Keranjang</a>
         </li>
+        @endauth
       </ul>
       <div class="d-flex align-items-center">
       @auth
@@ -61,6 +63,24 @@
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required>
                 @error('name')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+              </div>
+              <div class="mb-3">
+                <label for="no_hp" class="form-label">No Handphone</label>
+                <input type="text" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" required>
+                @error('no_hp')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+              </div>
+              <div class="mb-3">
+                <label for="alamat" class="form-label">Alamat</label>
+                <textarea type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat') }}" required></textarea>
+                @error('alamat')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -134,7 +154,32 @@
         </div>
     </div>
   </div>
-  <a href="https://wa.me/" style="position: fixed; right: 20px; bottom: 20px; font-size: 60px">
-    <i class="fa-brands fa-square-whatsapp text-success"></i>
-  </a>
+  <button class="btn btn-success" style="position: fixed; right: 20px; bottom: 20px; font-size: 40px" data-bs-toggle="modal" data-bs-target="#chat">
+    <i class="fa-solid fa-comments text-white"></i>
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="chat" tabindex="-1" aria-labelledby="chatLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="chatLabel">Kritik dan Saran</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="nama" class="form-label">Nama</label>
+              <input type="text" class="form-control" id="nama">
+            </div>
+            <div class="mb-3">
+              <label for="pesan" class="form-label">Pesan</label>
+              <textarea type="text" class="form-control" id="pesan"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection

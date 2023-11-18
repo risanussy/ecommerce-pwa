@@ -1,0 +1,9 @@
+Revisi Sistem
+1. Data pelanggan ditambahkan seperti nama,alamat,no hp, 
+   jadi saat mesan langsung otomatis tidak perlu ketik lagi.
+2. Data penjualan untuk admin di tambahkan
+3. Proses barang atau status barang musti ada di user
+4. Quality produk Belanja lebih dari 1 barang harus bisa.
+5. Bukti cod atau resi cod musti ada di user 
+6. Jangan terlink ke whatapp melainkan ada sistem chat sendiri
+7. Profile admin musti ada dan bisa ganti password di sistem.
