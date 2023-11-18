@@ -12,7 +12,7 @@
           <p>{{ $product->deskripsi }}</p>
       </div>
       <div class="col">
-        <form action="{{ route('sell.store') }}" method="POST">
+        <form action="{{ route('cart.buy') }}" method="POST">
           @csrf
           <input type="hidden" value="{{ $product->id }}" name="product_id">
           @auth

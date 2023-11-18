@@ -19,7 +19,7 @@
           </div>
           <div>
             <h5>{{ $cartItem->nama }}</h5>
-            <h6>Jumlah : {{ $cartItem->jumlah }}</h6>
+            <h6>total : {{ $cartItem->quantity }}</h6>
             <small>Rp. {{ number_format($cartItem->harga, 0, ',', '.') }}</small>
           </div>
         </div>

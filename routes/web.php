@@ -3,8 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\SellController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,14 +59,17 @@ Route::get('/tq', function () {
 });
 
 Route::resource('/products', ProductController::class);
-Route::post('/sell', [SellController::class, 'store'])->name('sell.store');
-Route::post('/sell', [SellController::class, 'status'])->name('sell.status');
-Route::get('/admin/sell', [SellController::class, 'index'])->name('sell.index');
-Route::resource('/sell', SellController::class);
+Route::post('/buy', [TransactionController::class, 'buy'])->name('cart.buy');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
+Route::get('/cart', [TransactionController::class, 'index'])->name('cart.index');
+Route::get('/admin/sell', [TransactionController::class, 'sell'])->name('cart.sell');
+Route::post('/cart', [TransactionController::class, 'store'])->name('cart.store') ;
+Route::get('/cart/{id}', [TransactionController::class, 'show'])->name('cart.show');
+Route::delete('/cart/{id}', [TransactionController::class, 'destroy'])->name('cart.destroy');
 
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart', [CartController::class, 'store'])->name('cart.store') ;
-Route::get('/cart/{id}', [CartController::class, 'show'])->name('cart.show');
-Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+
+
+Route::post('/sell/{id}/kirim', [TransactionController::class, 'kirim'])->name('sell.kirim');
+Route::post('/sell/{id}/selesai', [TransactionController::class, 'selesai'])->name('sell.selesai');
+Route::post('/sell/{id}/canceled', [TransactionController::class, 'canceled'])->name('sell.canceled');

@@ -12,6 +12,7 @@
             <th scope="col">Barang</th>
             <th scope="col">Harga</th>
             <th scope="col">Total</th>
+            <th scope="col">Process</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -31,26 +32,49 @@
             <td>{{ $sell->user_name }}</td>
             <td>{{ $sell->alamat }}</td>
             <td>{{ $sell->nama }}</td>
+            <td>Rp. {{ number_format($sell->harga, 0, ',', '.') }}</td>
             <td>Rp. {{ number_format($sell->total, 0, ',', '.') }}</td>
             <td>
-                <span class="badge rounded-pill text-bg-warning pea">{{ $sell->status }}</span>
-                <input type="hidden" class="hid" value="{{ $sell->id }}" >
+                @if ($sell->process == 1)
+                    <span class="badge rounded-pill text-bg-warning pea">Konfirmasi</span>
+                @elseif ($sell->process == 0)
+                    <span class="badge rounded-pill text-bg-danger pea">Canceled</span>
+                @elseif ($sell->process == 2)
+                    <span class="badge rounded-pill text-bg-info pea">Dikirimkan</span>
+                @elseif ($sell->process == 3)
+                    <span class="badge rounded-pill text-bg-success pea">Selesai</span>
+                @endif
+                <input type="hidden" class="hid" value="{{ $sell->id }}">
             </td>
             <td>
-                <button class="btn btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Action
-                </button>
-                <ul class="dropdown-menu">
-                    <li>
-                        <button class="dropdown-item" onclick="cs({{ $loop->index }}, 'Process')">Process</button>
-                    </li>
-                    <li>
-                        <button class="dropdown-item" onclick="cs({{ $loop->index }}, 'Done')">Done</button>
-                    </li>
-                    <li>
-                        <button class="dropdown-item" onclick="cs({{ $loop->index }}, 'Canceled')">Canceled</button>
-                    </li>
-                </ul>
+                <div class="btn-group">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Action
+                    </button>
+                    <ul class="dropdown-menu">
+                        @if ($sell->process == 1)
+                            <li>
+                                <form method="post" action="{{ route('sell.kirim', $sell->pid) }}">
+                                    @csrf
+                                    <button class="dropdown-item" type="submit">Kirim</button>
+                                </form>
+                            </li>
+                        @elseif ($sell->process == 2)
+                            <li>
+                                <form method="post" action="{{ route('sell.selesai', $sell->pid) }}">
+                                    @csrf
+                                    <button class="dropdown-item" type="submit">Selesai</button>
+                                </form>
+                            </li>
+                        @endif
+                        <li>
+                            <form method="post" action="{{ route('sell.canceled', $sell->pid) }}">
+                                @csrf
+                                <button class="dropdown-item" type="submit">Canceled</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </td>
         </tr>
     @endforeach
@@ -58,14 +82,4 @@
     </tbody>
     </table>
 </div>
-
-<script>
-    document.querySelector(".sell").classList.add("active")
-    document.querySelector(".product").classList.remove("active")
-
-    let cs = (id, status) => {
-        let test = document.querySelectorAll('.pea')
-        test[id].innerHTML = status;
-    }
-</script>
 @endsection
