@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Sell;
 use App\Models\CartItem;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -17,9 +18,11 @@ class ProductController extends Controller
     
     public function show($id)
     {
+        $userId = Auth::id();
         $product = Product::findOrFail($id);
+        $userData = Auth::user()->alamat;
     
-        return view('pay', compact('product'));
+        return view('pay', compact('product', 'userData'));
     }
 
     public function create()

@@ -96,5 +96,7 @@
 <script>
     document.querySelector(".sell").classList.remove("active")
     document.querySelector(".product").classList.add("active")
+    document.querySelector(".users").classList.remove("active")
+    document.querySelector(".chat").classList.remove("active")
 </script>
 @endsection

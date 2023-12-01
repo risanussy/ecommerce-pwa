@@ -23,6 +23,20 @@ class TransactionController extends Controller
         return view('cart', compact('cartItems'));
     }
 
+    public function resi()
+    {
+        $userId = Auth::id();
+
+        $cartItems = DB::table('transactions')
+            ->join('products', 'transactions.product_id', '=', 'products.id')
+            ->where('transactions.user_id', $userId)
+            ->where('transactions.status', 2) // Tambahkan kondisi untuk status
+            ->select('products.*', 'transactions.*')
+            ->get();
+
+        return view('resi', compact('cartItems'));
+    }
+
     public function sell()
     {
         $selling = DB::table('transactions')
@@ -68,31 +82,61 @@ class TransactionController extends Controller
     }
     
     public function show($id)
-    {
-        $cartItems = Transaction::findOrFail($id);
-    
-        return view('pay', compact('cartItems'));
+    {    
+        $product = DB::table('transactions')
+            ->join('products', 'transactions.product_id', '=', 'products.id')
+            ->where('transactions.id', $id)
+            ->where('transactions.status', 1)
+            ->select('products.*', 'transactions.*', 'transactions.id as tid')
+            ->first(); // Menggunakan first() untuk mendapatkan satu objek
+        
+        if (!$product) {
+            // Handle jika transaksi tidak ditemukan, bisa redirect atau berikan response yang sesuai.
+            return redirect()->route('home')->with('error', 'Transaksi tidak ditemukan.');
+        }
+        $userData = Auth::user()->alamat;
+
+        return view('pay', compact('product', 'userData'));
     }
 
     public function buy(Request $request)
     {
         // Validasi data
-        $data = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'user_id' => 'required|exists:users,id',
-            'total' => 'required',
-        ]);
+        $data = $request;
+        
+        // Cek apakah item dengan product_id sudah ada di keranjang
+        $existingCartItem = Transaction::where('id', $data['transaction_id'])
+            ->first();
 
-        // Tambahkan status ke data
-        $data['status'] = 2;
-        $data['quantity'] = 1;
-        $data['process'] = 1;
-
-        // Jika belum ada, tambahkan item baru ke keranjang
-        Transaction::create($data);
+        // var_dump($existingCartItem);
+        if ($existingCartItem) {
+            // Validasi data
+            $update = $request->validate([
+                'total' => 'required'
+            ]);
+            // Jika sudah ada, tambahkan total
+            $existingCartItem->process = 1;
+            $existingCartItem->status = 2;
+            $existingCartItem->total = $update['total'];
+            $existingCartItem->save();
+        } else {
+            // Validasi data
+            $create = $request->validate([
+                'product_id' => 'required|exists:products,id',
+                'user_id' => 'required|exists:users,id',
+                'total' => 'required',
+            ]);
+            // Set default values
+            $create['status'] = 2;
+            $create['quantity'] = 1;
+            $create['process'] = 1;
+            // Jika belum ada, tambahkan item baru ke keranjang
+            Transaction::create($create);
+        }
 
         return redirect('tq')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
     }
+
 
     public function store(Request $request)
     {
@@ -123,7 +167,71 @@ class TransactionController extends Controller
             Transaction::create($data);
         }
 
-        return redirect()->route('cart.index')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
+        return redirect('/')->with('success', 'Produk berhasil ditambahkan ke keranjang.');
+    }
+
+    public function buyAll(Request $request, $id)
+    {
+        $userId = $id;
+        $selectedItems = $request->selectedItems;
+
+        try {
+            // Ambil semua item yang sesuai dengan user_id dan status 1
+            $existingCartItems = Transaction::where('user_id', $userId)
+                ->where('status', 1)
+                ->get();
+
+            foreach ($selectedItems as $index) {
+                // Pastikan indeks benar-benar valid
+                if ($index < count($existingCartItems)) {
+                    // Ambil item berdasarkan indeks
+                    $cartItem = $existingCartItems[$index];
+
+                    // Ubah status item menjadi 0
+                    $cartItem->status = 2;
+                    $cartItem->process = 1;
+                    $cartItem->total = 10000 * $cartItem->quantity;
+                    $cartItem->save();
+
+                    // Lakukan sesuatu setelah item diubah status
+                }
+            }
+
+            return response()->json(['message' => 'Semua item berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Terjadi kesalahan saat menghapus item.'], 500);
+        }
+    }
+
+    public function deleteAll(Request $request, $id)
+    {
+        $userId = $id;
+        $selectedItems = $request->selectedItems;
+
+        try {
+            // Ambil semua item yang sesuai dengan user_id dan status 1
+            $existingCartItems = Transaction::where('user_id', $userId)
+                ->where('status', 1)
+                ->get();
+
+            foreach ($selectedItems as $index) {
+                // Pastikan indeks benar-benar valid
+                if ($index < count($existingCartItems)) {
+                    // Ambil item berdasarkan indeks
+                    $cartItem = $existingCartItems[$index];
+
+                    // Ubah status item menjadi 0
+                    $cartItem->status = 0;
+                    $cartItem->save();
+
+                    // Lakukan sesuatu setelah item diubah status
+                }
+            }
+
+            return response()->json(['message' => 'Semua item berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Terjadi kesalahan saat menghapus item.'], 500);
+        }
     }
 
     public function destroy($id)

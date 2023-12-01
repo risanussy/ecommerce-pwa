@@ -18,9 +18,11 @@
           @auth
           <input type="hidden" value="{{ auth()->user()->id  }}" name="user_id">
           @endauth
+          <input type="hidden" value="{{ $product->tid }}" name="transaction_id">
+          <input type="hidden" value="{{ $product->quantity }}" name="quantity">
           <div class="mb-3">
             <label class="form-label">Alamat</label>
-            <textarea class="form-control" name="alamat"></textarea>
+            <textarea class="form-control" name="alamat">{{ $userData }}</textarea>
           </div>
           <h4 class="mb-3">Pengiriman</h4>
           <div class="d-flex">
@@ -69,7 +71,14 @@
   function updateTotal() {
     var deliveryCost = document.querySelector('input[name="send"]:checked').value;
     var productPrice = {{ $product->harga }};
-    var total = parseInt(deliveryCost) + parseInt(productPrice);
+    var quantity = {{ $product->quantity }};
+
+    if(quantity > 1) {
+      var total = (parseInt(deliveryCost) + parseInt(productPrice)) * quantity;
+    }else {
+      var total = parseInt(deliveryCost) + parseInt(productPrice);  
+    }
+
     var formatter = new Intl.NumberFormat('id-ID', {
       style: 'currency',
       currency: 'IDR'

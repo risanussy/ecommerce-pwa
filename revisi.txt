@@ -7,3 +7,11 @@ Revisi Sistem
 5. Bukti cod atau resi cod musti ada di user 
 6. Jangan terlink ke whatapp melainkan ada sistem chat sendiri
 7. Profile admin musti ada dan bisa ganti password di sistem.
+
+(g perlu) 1. Button untuk login admin di Beranda atau profil adminnya?
+(udah) 2. Di Dashboard admin, belum ada data (user) pelanggan
+(udah) 3. Pas pilih produk untuk masukin ke keranjang, jangan langsung kehalaman keranjang. Tetap di dashboard aja. Ke halaman keranjangnya kalau si user pilih button keranjang (mau masuk ke page chart dengan kehendak sendiri)
+(nanti) 4. Untuk chat internalnya yang bisa kirim pesan dan admin bisa balas. Yang mas buat itu kayak button feedback, bukan chat internal
+5. Di keranjang, Button beli semua dan hapus yang di sampingnya ga berfungsi.
+6. Produk di keranjang yang sudah dibeli ga terhapus di keranjang
+(resi)(udah)7. Terus yg mas bilang nyambung ke ekspedisinya mana? Bukti cod / cek resinya?

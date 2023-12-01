@@ -3,8 +3,9 @@
 @section('content')
   <div class="container pt-4 pb-5">
     <h4 class="mb-3">Keranjang.</h4>
-    <button class="btn btn-outline-success me-1">Beli Semua</button>
-    <button class="btn btn-outline-danger"><i class="fa-solid fa-trash-can"></i></button>
+    <button class="btn btn-outline-success me-1" onclick="buyAll()">Beli Semua</button>
+    <button class="btn btn-outline-danger" onclick="deleteAll()"><i class="fa-solid fa-trash-can"></i> Hapus Semua</button>
+
     <hr>
     @if ($cartItems->isEmpty())
         <p>Keranjang belanja kosong.</p>
@@ -24,7 +25,7 @@
           </div>
         </div>
         <div>
-          <a href="{{ route('products.show', ['product' => $cartItem->product_id]) }}" class="btn btn-outline-success me-1">Beli</a>
+          <a href="{{ route('cart.show', ['id' => $cartItem->id]) }}" class="btn btn-outline-success me-1">Beli</a>
           <form action="{{ route('cart.destroy', ['id' => $cartItem->id]) }}" method="POST" style="display: inline-block;">
           <button class="btn btn-outline-danger" value="Delete"><i class="fa-solid fa-trash-can"></i></button>
           @method('delete')
@@ -44,4 +45,52 @@
       document.querySelector('.crd-' + e).style.display = 'none';
     }
   </script>
+
+  @auth
+  <script>
+    let buyAll = () => {
+      let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      let selectedItems = [];
+
+      checkboxes.forEach((checkbox, index) => {
+        if (checkbox.checked) {
+          selectedItems.push(index);
+        }
+      });
+
+      // Kirim AJAX request ke backend untuk memproses pembelian semua item yang dicentang
+      axios.post('/api/buy-all/{{ auth()->user()->id  }}', { selectedItems })
+        .then(response => {
+          console.log(response.data);
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error(error);
+          // Handle error, e.g., display error message
+        });
+    };
+
+    let deleteAll = () => {
+      let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      let selectedItems = [];
+
+      checkboxes.forEach((checkbox, index) => {
+        if (checkbox.checked) {
+          selectedItems.push(index);
+        }
+      });
+
+      // Kirim AJAX request ke backend untuk menghapus semua item yang dicentang
+      axios.post('/api/delete-all/{{ auth()->user()->id  }}', { selectedItems })
+        .then(response => {
+          console.log(response.data);
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error(error);
+          // Handle error, e.g., display error message
+        });
+    };
+  </script>
+  @endauth
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User; // Import model User
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -71,5 +72,15 @@ class AuthController extends Controller
         $request->session()->regenerateToken(); // Membuat token sesi baru
     
         return redirect('/'); // Redirect ke halaman login setelah keluar
+    }
+
+    public function showUserName()
+    {
+        $usersDatas = DB::table('users')
+            ->select('users.*')
+            ->where('name', '!=', 'admin')
+            ->get();
+    
+        return view('list', ['usersDatas' => $usersDatas]);
     }
 }
