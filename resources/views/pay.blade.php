@@ -69,26 +69,29 @@
   <script>
   // Function to update the total
   function updateTotal() {
-    var deliveryCost = document.querySelector('input[name="send"]:checked').value;
-    var productPrice = {{ $product->harga }};
-    var quantity = {{ $product->quantity }};
-
+    let deliveryCost = document.querySelector('input[name="send"]:checked').value;
+    let productPrice = {{ $product->harga }};
+    
+    let quantity = {{ $product->quantity || 1 }};
+    let totaly = 0
     if(quantity > 1) {
-      var total = (parseInt(deliveryCost) + parseInt(productPrice)) * quantity;
+      totaly = (parseInt(deliveryCost) + parseInt(productPrice)) * quantity;
     }else {
-      var total = parseInt(deliveryCost) + parseInt(productPrice);  
+      totaly = parseInt(deliveryCost) + parseInt(productPrice);  
     }
+    console.log(totaly); 
 
-    var formatter = new Intl.NumberFormat('id-ID', {
+
+    let formatter = new Intl.NumberFormat('id-ID', {
       style: 'currency',
       currency: 'IDR'
     });
-    document.getElementById('total').innerHTML = formatter.format(total);
-    document.getElementById('total-val').value = parseInt(total);
+    document.getElementById('total').innerHTML = formatter.format(totaly);
+    document.getElementById('total-val').value = parseInt(totaly);
   }
 
   // Add event listeners to the delivery options
-  var deliveryOptions = document.querySelectorAll('input[name="send"]');
+  let deliveryOptions = document.querySelectorAll('input[name="send"]');
   deliveryOptions.forEach(function(option) {
     option.addEventListener('change', updateTotal);
   });
