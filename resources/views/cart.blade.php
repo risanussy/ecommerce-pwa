@@ -3,7 +3,7 @@
 @section('content')
   <div class="container pt-4 pb-5">
     <h4 class="mb-3">Keranjang.</h4>
-    <button class="btn btn-outline-success me-1" onclick="buyAll()">Beli Semua</button>
+    <button class="btn btn-outline-success me-1" data-bs-toggle="modal" data-bs-target="#expe">Beli Semua</button>
     <button class="btn btn-outline-danger" onclick="deleteAll()"><i class="fa-solid fa-trash-can"></i> Hapus Semua</button>
 
     <hr>
@@ -38,7 +38,34 @@
     @endforeach
     @endif
   </div>
-
+  
+  <div class="modal fade" id="expe" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="addProductModalLabel">Tambah Produk Baru</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form method="POST">
+                      <div class="mb-3">
+                          <label for="exp" class="form-label">Nama Produk</label>
+                          <select class="form-select" id="exp" name="total" required>
+                            <option value="">Pilih Expedisi</option>
+                            <option value="9000">Gojek</option>
+                            <option value="8000">Grab</option>
+                            <option value="6000">Maxim</option>
+                          </select>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                          <button type="button" class="btn btn-success" onclick="buyAll()">Tambah</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
   <script>
     let del = (e) => {
       console.log(document.querySelector('.crd-' + e))
@@ -50,6 +77,7 @@
   <script>
     let buyAll = () => {
       let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      let exp = document.querySelector('#exp').value;
       let selectedItems = [];
 
       checkboxes.forEach((checkbox, index) => {
@@ -59,7 +87,7 @@
       });
 
       // Kirim AJAX request ke backend untuk memproses pembelian semua item yang dicentang
-      axios.post('/api/buy-all/{{ auth()->user()->id  }}', { selectedItems })
+      axios.post('/api/buy-all/{{ auth()->user()->id  }}', { selectedItems, total: exp })
         .then(response => {
           console.log(response.data);
           window.location.reload();

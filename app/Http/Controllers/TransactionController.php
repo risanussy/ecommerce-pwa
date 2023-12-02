@@ -174,11 +174,14 @@ class TransactionController extends Controller
     {
         $userId = $id;
         $selectedItems = $request->selectedItems;
+        $totals = $request->total;
 
         try {
             // Ambil semua item yang sesuai dengan user_id dan status 1
             $existingCartItems = Transaction::where('user_id', $userId)
+                ->join('products', 'transactions.product_id', '=', 'products.id')
                 ->where('status', 1)
+                ->select('products.*', 'transactions.*', 'transactions.id as tid')
                 ->get();
 
             foreach ($selectedItems as $index) {
@@ -190,7 +193,7 @@ class TransactionController extends Controller
                     // Ubah status item menjadi 0
                     $cartItem->status = 2;
                     $cartItem->process = 1;
-                    $cartItem->total = 10000 * $cartItem->quantity;
+                    $cartItem->total = $totals + ($cartItem->quantity * $cartItem->harga);
                     $cartItem->save();
 
                     // Lakukan sesuatu setelah item diubah status
