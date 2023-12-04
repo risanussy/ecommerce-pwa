@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\Sell;
-use App\Models\CartItem;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -87,8 +86,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
-        $cart = CartItem::where('product_id', $id)->delete();
-        $sell = Sell::where('product_id', $id)->delete();
+        $cart = Transaction::where('product_id', $id)->delete();
         
         // Hapus foto jika ada
         if ($product->foto) {
