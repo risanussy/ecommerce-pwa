@@ -51,6 +51,10 @@ Route::get('/tq', function () {
     return view('tq');
 });
 
+Route::get('/profil', function () {
+    return view('profil');
+});
+
 // Admin
 
 Route::get('/admin', function () {

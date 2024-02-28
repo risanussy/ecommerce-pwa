@@ -4,10 +4,11 @@
 <nav class="navbar navbar-expand-lg bg-light navbar-light border-bottom">
   <div class="container">
     <a class="navbar-brand" href="/">
-        <img src="{{ asset('img/logo.png') }}" width="30px">
-        <b class="text-success">Green</b>place
+      <img src="{{ asset('img/logo.png') }}" width="30px">
+      <b class="text-success">Green</b>place
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -22,22 +23,25 @@
         <li class="nav-item">
           <a class="nav-link" href="/resi">Resi</a>
         </li>
+        <li class="nav-item">
+        </li>
         @endauth
       </ul>
       <div class="d-flex align-items-center">
-      @auth
-      <div class="me-3 text-right">
+        @auth
+        <a class="nav-link me-3" href="/profil">Profil</a>
+        <div class="me-3 text-right">
           <p class="p-0 m-0">{{ auth()->user()->name }} | user</p>
         </div>
         <form method="POST" action="{{ route('logout') }}">
           @csrf
           <button type="submit" class="btn btn-outline-danger me-2">Logout</button>
         </form>
-      @else
+        @else
         <button class="btn btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#login">Login</button>
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#register">Daftar</button>
         <a href="/admin" class="ms-2 btn btn-info">Login Sebagai Admin</a>
-      @endauth
+        @endauth
       </div>
     </div>
   </div>
@@ -63,55 +67,72 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required>
-              @error('name')
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-              @enderror
-            </div>
-            <div class="mb-3">
-              <label for="no_hp" class="form-label">No Handphone</label>
-              <input type="text" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" required>
-              @error('no_hp')
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-              @enderror
-            </div>
-            <div class="mb-3">
-              <label for="alamat" class="form-label">Alamat</label>
-              <textarea type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat') }}" required></textarea>
-              @error('alamat')
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-              @enderror
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
-              @error('email')
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-              @enderror
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
-              @error('password')
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-              @enderror
-            </div>
-            <div class="mb-3">
-              <label for="password_confirmation" class="form-label">Confirm Password</label>
-              <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
-            </div>
+          <input type="hidden" class="form-control @error('role') is-invalid @enderror" id="role" name="role"
+            value="user" required>
+          <div class="mb-3">
+            <label for="nik" class="form-label">NIK</label>
+            <input type="text" class="form-control @error('nik') is-invalid @enderror" id="nik" name="nik" required>
+            @error('nik')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
+              value="{{ old('name') }}" required>
+            @error('name')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="no_hp" class="form-label">No Handphone</label>
+            <input type="text" class="form-control @error('no_hp') is-invalid @enderror" id="no_hp" name="no_hp"
+              value="{{ old('no_hp') }}" required>
+            @error('no_hp')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="alamat" class="form-label">Alamat</label>
+            <textarea type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat"
+              value="{{ old('alamat') }}" required></textarea>
+            @error('alamat')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
+              value="{{ old('email') }}" required>
+            @error('email')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
+              name="password" required>
+            @error('password')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="password_confirmation" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation"
+              required>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Register</button>
@@ -123,43 +144,46 @@
 
 <!-- Login Modal -->
 <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Login</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                  <label for="email" class="form-label">Email address</label>
-                  <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required autofocus>
-                  @error('email')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
-                </div>
-                <div class="mb-3">
-                  <label for="password" class="form-label">Password</label>
-                  <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
-                  @error('password')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
-                </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Login</button>
-            </div>
-        </form>
-      </div>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form method="POST" action="{{ route('login') }}">
+        @csrf
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Login</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="nik" class="form-label">NIK</label>
+            <input type="text" class="form-control @error('nik') is-invalid @enderror" id="nik" name="nik"
+              value="{{ old('nik') }}" required autofocus>
+            @error('email')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
+              name="password" required>
+            @error('password')
+            <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 @auth
-<button class="btn btn-success" style="position: fixed; right: 20px; bottom: 20px; font-size: 40px" data-bs-toggle="modal" data-bs-target="#chat">
+<button class="btn btn-success" style="position: fixed; right: 20px; bottom: 20px; font-size: 40px"
+  data-bs-toggle="modal" data-bs-target="#chat">
   <i class="fa-solid fa-comments text-white"></i>
 </button>
 @endauth
@@ -194,26 +218,30 @@
 
 @auth
 <script>
-  function postChat() {
-    const pesan = document.getElementById('pesan').value;
-    const user_id = document.getElementById('user_id').value;
-    
-    axios.post('/api/chats', { pesan: pesan, user_id, admin: 0})
+function postChat() {
+  const pesan = document.getElementById('pesan').value;
+  const user_id = document.getElementById('user_id').value;
+
+  axios.post('/api/chats', {
+      pesan: pesan,
+      user_id,
+      admin: 0
+    })
     .then(response => {
       console.log(response.data);
-        // Handle success, e.g., refresh chat or display success message
-      })
-      .catch(error => {
-        console.error(error);
-        // Handle error, e.g., display error message
-      });
-  }
+      // Handle success, e.g., refresh chat or display success message
+    })
+    .catch(error => {
+      console.error(error);
+      // Handle error, e.g., display error message
+    });
+}
 
-  let loop = (chats) => {
-    let tags = []
-    chats.map(item => {
-      if (item.admin === 1){
-        tags.push(`
+let loop = (chats) => {
+  let tags = []
+  chats.map(item => {
+    if (item.admin === 1) {
+      tags.push(`
           <small class="text-info">Admin</small>
           <div class="card mb-2 bg-info">
             <div class="card-body">
@@ -221,8 +249,8 @@
             </div>
           </div>
         `)
-      }else {
-        tags.push(`
+    } else {
+      tags.push(`
           <small>Anda</small>
           <div class="card mb-2">
             <div class="card-body">
@@ -230,22 +258,22 @@
             </div>
           </div>
         `)
-      }
+    }
+  })
+
+  return tags.join(' ')
+}
+
+setInterval(() => {
+  axios.get('/api/chats/{{ auth()->user()->id  }}')
+    .then(response => {
+      let data = response.data.data;
+      let isAdmin = response.data.data.admin;
+
+      document.querySelector('.chatbox').innerHTML = loop(data)
+      // Handle success, e.g., refresh chat or display success message
     })
-
-    return tags.join(' ')
-  }
-
-  setInterval(() => {
-    axios.get('/api/chats/{{ auth()->user()->id  }}')
-      .then(response => {
-        let data = response.data.data ;
-        let isAdmin = response.data.data.admin;
-
-        document.querySelector('.chatbox').innerHTML = loop(data)
-        // Handle success, e.g., refresh chat or display success message
-      })    
-  }, 1000);
+}, 1000);
 </script>
 @endauth
 @endsection

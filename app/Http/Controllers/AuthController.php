@@ -24,6 +24,8 @@ class AuthController extends Controller
         // Validasi data
         $this->validate($request, [
             'name' => 'required',
+            'nik' => 'required',
+            'role' => 'required',
             'alamat' => 'required',
             'no_hp' => 'required',
             'email' => 'required|email|unique:users',
@@ -33,6 +35,8 @@ class AuthController extends Controller
         // Buat user baru
         $user = User::create([
             'name' => $request->name,
+            'nik' => $request->nik,
+            'role' => $request->role,
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
             'email' => $request->email,
@@ -48,17 +52,25 @@ class AuthController extends Controller
     
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('nik', 'password');
     
         if (Auth::attempt($credentials)) {
             // Jika berhasil login
     
-            // Cek apakah pengguna yang login adalah admin
-            if (Auth::user()->name === 'admin') {
-                return redirect('/admin/sell'); // Jika admin, arahkan ke /product
+            if (Auth::check()) {
+                // Cek apakah pengguna yang login adalah admin atau manager
+                if (Auth::user()->role == 'admin') {
+                    return redirect('/admin/sell'); // Jika admin atau manager, arahkan ke /admin/sell
+                } else if (Auth::user()->role == 'manager') {
+                    return redirect('/admin/sell'); // Jika admin atau manager, arahkan ke /admin/sell
+                } else {
+                    return redirect('/'); // Jika bukan admin atau manager, arahkan ke halaman utama
+                }
             } else {
-                return redirect('/'); // Jika bukan admin, arahkan ke halaman utama
+                // Tambahkan penanganan jika pengguna tidak login
+                return redirect('/');
             }
+            
         } else {
             // Jika gagal login
             return back()->withErrors(['message' => 'Invalid credentials']);
