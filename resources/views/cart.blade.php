@@ -14,7 +14,7 @@
     <div class="card mb-3 crd-{{ $loop->index }}">
       <div class="card-body d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-          <input type="checkbox" class="me-3">
+          <input type="checkbox" value="{{$cartItem->harga}}" class="me-3">
           <div class="d-flex justify-content-center align-items-center overflow-hidden me-2" style="width: 100px; height: 60px">
             <img src="{{ asset('product/'.$cartItem->foto) }}" class="card-img-top" width="110%">
           </div>
@@ -52,14 +52,15 @@
                           <label for="exp" class="form-label">Nama Produk</label>
                           <select class="form-select" id="exp" name="total" required>
                             <option value="">Pilih Expedisi</option>
-                            <option value="9000">Gojek</option>
-                            <option value="8000">Grab</option>
-                            <option value="6000">Maxim</option>
+                            <option value="9000">Instant</option>
+                            <option value="8000">Same Day</option>
+                            <option value="6000">Reguler</option>
                           </select>
                       </div>
+                      <div id="snap-container"></div>
+                      <button class="btn btn-success" type="button" id="cpay">Bayar</button>
                       <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                          <button type="button" class="btn btn-success" onclick="buyAll()">Tambah</button>
                       </div>
                   </form>
               </div>
@@ -119,6 +120,83 @@
           // Handle error, e.g., display error message
         });
     };
+
+    document.querySelector("#cpay").onclick = () => {  
+      let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      let exp = document.querySelector('#exp').value;
+      let selectedItems = [];
+      let totalPay = [];
+
+      checkboxes.forEach((checkbox, index) => {
+        if (checkbox.checked) {
+          selectedItems.push(index);
+          totalPay.push(checkbox.value);
+        }
+      });
+
+
+      axios.post('/api/notif', {
+                pesan: "Pesanan Baru",
+                user_id: "{{ auth()->user()->id }}",
+                admin: 0,
+                status: 0,
+                })
+                .then(response => {
+                console.log(response.data);
+                // Handle success, e.g., refresh chat or display success message
+                  })
+
+
+
+      count = 0
+
+      totalPay.map(item => {
+        count += item
+      })
+
+
+      axios.post('/api/midtrans', {
+        first_name: "kasir", last_name:"pc", wa: "0895811322300", email: "test@test.com", total: parseInt(count)
+      })
+        .then(res => {
+          window.snap.embed(res.data.token, {
+            embedId: 'snap-container',
+            onSuccess: function(result){                  
+              Swal.fire({
+                title: "Sukses!",
+                text: "Terimakasih telah berbelanja!",
+                icon: "success"
+              })
+
+              buyAll()
+            },
+            onPending: function(){
+              Swal.fire({
+                title: "Pending!",
+                text: "Selesaikan dulu pembayaran!",
+                icon: "warning"
+              });
+            },
+            onError: function(){
+              Swal.fire({
+                title: "Error!",
+                text: "Terjadi kesalahan dalam pembayaran!",
+                icon: "error"
+              });
+            },
+            onClose: function(){
+              Swal.fire({
+                title: "Keluar!",
+                text: "Anda keluar tanpa menyelesaikan pembayaran!",
+                icon: "error"
+              });
+            }
+          });
+        })
+    }
+    
+
+    
   </script>
   @endauth
 @endsection

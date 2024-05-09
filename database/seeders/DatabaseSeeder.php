@@ -39,5 +39,17 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::table('users')->insert([
+            'name' => 'User',
+            'role' => 'user',
+            'nik' => '123',
+            'alamat' => 'root',
+            'no_hp' => '089509589977',
+            'email' => 'user@test.com',
+            'password' => bcrypt('user1234'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

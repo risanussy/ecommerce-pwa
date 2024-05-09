@@ -125,6 +125,8 @@ class TransactionController extends Controller
                 'product_id' => 'required|exists:products,id',
                 'user_id' => 'required|exists:users,id',
                 'total' => 'required',
+                'pay_method' => 'required',
+                'expedisi' => 'required',
             ]);
             // Set default values
             $create['status'] = 2;
@@ -149,6 +151,8 @@ class TransactionController extends Controller
         // Tambahkan status ke data
         $data['status'] = 1;
         $data['total'] = 0;
+        $data['pay_method'] = 'qris';
+        $data['expedisi'] = 'Grab';
         $data['quantity'] = 1;
         $data['process'] = 0;
 
@@ -200,9 +204,9 @@ class TransactionController extends Controller
                 }
             }
 
-            return response()->json(['message' => 'Semua item berhasil dihapus.']);
+            return response()->json(['message' => 'Semua item berhasil Dibeli.']);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Terjadi kesalahan saat menghapus item.'], 500);
+            return response()->json(['message' => 'Terjadi kesalahan saat membeli item.'], 500);
         }
     }
 

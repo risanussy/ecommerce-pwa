@@ -95,4 +95,35 @@ class AuthController extends Controller
     
         return view('list', ['usersDatas' => $usersDatas]);
     }
+
+    public function profil()
+    {
+        return view('profil');
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi input
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'no_hp' => 'required',
+            'alamat' => 'required',
+            'foto' => 'image',
+        ]);
+
+        // Jika ada foto baru, simpan ke folder public/product
+        if($request->hasFile('foto')){
+            $image = $request->file('foto');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('profile'), $imageName);
+            $data['foto'] = $imageName;
+        }
+
+        // Update data produk
+        $profil = User::findOrFail($id);
+        $profil->update($data);
+
+        return redirect()->route('profil')->with('success', 'Produk berhasil diperbarui.');
+    }
 }

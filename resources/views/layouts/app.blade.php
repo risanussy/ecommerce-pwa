@@ -8,7 +8,7 @@
   <!-- Add your CSS links here -->
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <link rel="icon"
-    href="https://cdn.dribbble.com/users/4553005/screenshots/13436219/media/0f0d109e1888047d02e23b5557f79c96.png?resize=1000x750&vertical=center">
+    href="https://koperasibayukarya.shop/img/logo.png">
 
   <link rel="manifest" href="manifest.json">
   <!-- Boostrap -->
@@ -22,12 +22,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"
     integrity="sha512-b94Z6431JyXY14iSXwgzeZurHHRNkLt9d6bAHt7BZT38eqV+GyngIi/tVye4jBKPYQ2lBdRs0glww4fmpuLRwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- midtrans -->
-  <script type="text/javascript" src="https://app.stg.midtrans.com/snap/snap.js"
-    data-client-key="SB-Mid-client-FhTCfUJ2L6u8rzbC0"></script>
+  <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="SB-Mid-client-GFPWM1_lel78ZLSg"></script>
+
+  <style>
+    #snap-midtrans {
+        min-width: 100% !important;
+    }
+  </style>
 
 </head>
 

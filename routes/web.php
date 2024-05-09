@@ -29,6 +29,8 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::put('/edit/{id}', [AuthController::class, 'update'])->name('user.update');
+
 // website
 
 Route::get('/', function () {
@@ -53,7 +55,7 @@ Route::get('/tq', function () {
 
 Route::get('/profil', function () {
     return view('profil');
-});
+})->name('profil');
 
 // Admin
 

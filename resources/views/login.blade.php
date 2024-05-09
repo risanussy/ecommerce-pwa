@@ -2,7 +2,7 @@
 
 @section('app')
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh; background-color: gainsboro;">
-  <div class="w-25 p-4 py-5 shadow-lg rounded bg-light">
+  <div class="p-4 py-5 shadow-lg rounded bg-light" style="width: 300px">
     <form method="POST" action="{{ route('login') }}">
       @csrf
       <!-- Tambahkan token CSRF -->
@@ -14,6 +14,7 @@
         <label for="password" class="form-label">Password</label>
         <input type="password" class="form-control" id="password" name="password">
       </div>
+      <a href="/" class="btn btn-danger">Kembali</a>
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
   </div>

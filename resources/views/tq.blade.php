@@ -7,7 +7,7 @@
     </div>
       <div class="px-5 py-3 rounded-3 bg-success py-3 bg-opacity-10">
         <div class="d-flex align-items-center">
-          <img src="{{ asset('img/plant-doodle.svg') }}" height="120px">
+          <img src="{{ asset('img/ilu.png') }}" height="120px">
           <div>
             <h2>Terimakasih telah belanja Di GreenPlace</h2>
             <p>Jangan lupa siapkan uang cashmu karena pembayaran akan langsung dengan kurirnya</p>
@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="mt-5">
-        <h3 class="mb-3">Produk.</h3>
+        <h3 class="mb-3">Rekomendasi Produk.</h3>
         <div class="d-flex gap-4 flex-wrap">
           @foreach ($products as $product)
           <div class="card" style="width: 300px;">

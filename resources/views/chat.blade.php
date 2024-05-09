@@ -64,12 +64,27 @@
                                     axios.post('/api/chats', { pesan: pesan, user_id, admin: 1})
                                     .then(response => {
                                     console.log(response.data);
+                                    
+                                    document.querySelector("#pesan").value = ""
                                         // Handle success, e.g., refresh chat or display success message
                                     })
                                     .catch(error => {
                                         console.error(error);
                                         // Handle error, e.g., display error message
                                     });
+
+                                    
+
+                                    axios.post('/api/notif', {
+                                        pesan: "Chat Dari : Admin",
+                                        user_id,
+                                        admin: 1,
+                                        status: 0,
+                                        })
+                                        .then(response => {
+                                        console.log(response.data);
+                                        // Handle success, e.g., refresh chat or display success message
+                                        })
                                 }
 
                                 let loop = (chats) => {
@@ -77,8 +92,8 @@
                                     chats.map(item => {
                                     if (item.admin === 1){
                                         tags.push(`
-                                        <small class="text-info">Admin</small>
-                                        <div class="card mb-2 bg-info">
+                                        <small class="text-info">Anda</small>
+                                        <div class="card mb-2">
                                             <div class="card-body">
                                             ${item.pesan}
                                             </div>
@@ -86,8 +101,8 @@
                                         `)
                                     }else {
                                         tags.push(`
-                                        <small>Anda</small>
-                                        <div class="card mb-2">
+                                        <small>User</small>
+                                        <div class="card mb-2 bg-info">
                                             <div class="card-body">
                                             ${item.pesan}
                                             </div>
@@ -108,7 +123,7 @@
                                         document.querySelector('.chatboxAdmin').innerHTML = loop(data)
                                         // Handle success, e.g., refresh chat or display success message
                                     })    
-                                }, 1000);
+                                }, 3000);
                                 </script>
                                 @endauth
                             </td>

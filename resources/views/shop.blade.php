@@ -5,7 +5,7 @@
   <div class="container">
     <a class="navbar-brand" href="/">
       <img src="{{ asset('img/logo.png') }}" width="30px">
-      <b class="text-success">Green</b>place
+      <b class="text-success">Koperasi</b> Bayu Karya
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,16 @@
       </ul>
       <div class="d-flex align-items-center">
         @auth
-        <a class="nav-link me-3" href="/profil">Profil</a>
+        <a class="nav-link" href="/profil">Profil</a>
+        <div class="dropdown mx-3">
+            <span type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bell text-muted fs-5"></i>
+            </span>
+            <div class="dropdown-menu p-3">
+              <ul class="list-group" id="notif-user" style="max-height:300px; min-width: 200px;overflow-y:scroll">
+            </div>
+            </ul>
+        </div>
         <div class="me-3 text-right">
           <p class="p-0 m-0">{{ auth()->user()->name }} | user</p>
         </div>
@@ -48,10 +57,9 @@
 </nav>
 <div class="d-flex bg-success text-light pt-2 pb-2">
   <div class="container">
-    <span class="me-5">Vegetable</span>
-    <span class="me-5">Fruit</span>
-    <span class="me-5">Plant</span>
-    <span class="me-5">Everything Green</span>
+    <marquee behavior="scroll" direction="left" scrollamount="5">
+    <span class="me-5">Selamat datang di Koperasi Bayu Karya! Temukan produk berkualitas dan harga terbaik untuk kebutuhan Anda. Selamat berbelanja! 🛍️</span>
+    </marquee>
   </div>
 </div>
 
@@ -204,6 +212,7 @@
           @csrf
           @auth
           <input type="hidden" value="{{ auth()->user()->id  }}" name="user_id" id="user_id">
+          <input type="hidden" value="{{ auth()->user()->name  }}" name="uname" id="uname">
           @endauth
           <div class="mb-3">
             <input type="text" class="form-control" id="pesan" name="pesan" placeholder="Chat ...">
@@ -221,6 +230,7 @@
 function postChat() {
   const pesan = document.getElementById('pesan').value;
   const user_id = document.getElementById('user_id').value;
+  const uname = document.getElementById('uname').value;
 
   axios.post('/api/chats', {
       pesan: pesan,
@@ -229,10 +239,26 @@ function postChat() {
     })
     .then(response => {
       console.log(response.data);
+      document.querySelector("#pesan").value = ""
       // Handle success, e.g., refresh chat or display success message
     })
     .catch(error => {
       console.error(error);
+      // Handle error, e.g., display error message
+    });
+
+  axios.post('/api/notif', {
+      pesan: "Chat Dari : " + uname,
+      user_id,
+      admin: 0,
+      status: 0,
+    })
+    .then(response => {
+      console.log(response.data);
+      // Handle success, e.g., refresh chat or display success message
+    })
+    .catch(error => {
+      console.log(error);
       // Handle error, e.g., display error message
     });
 }
@@ -264,6 +290,26 @@ let loop = (chats) => {
   return tags.join(' ')
 }
 
+const notif = document.querySelector("#notif-user")
+const DataNotif = (data) => {
+  if(data.length > 0){
+    let element = []
+    data.reverse().map(e => {
+      if(e.admin === 1){
+        element.push(`<li class="list-group-item">` + e.pesan + "</li>")
+      }
+    })
+
+    if(element.length > 0){
+      return element.join(" ")
+    }else {
+      return '<i class="text-center">Data Kosong</i>'
+    }
+  }else {
+    return '<i class="text-center">Data Kosong</i>'
+  }
+}
+
 setInterval(() => {
   axios.get('/api/chats/{{ auth()->user()->id  }}')
     .then(response => {
@@ -273,7 +319,12 @@ setInterval(() => {
       document.querySelector('.chatbox').innerHTML = loop(data)
       // Handle success, e.g., refresh chat or display success message
     })
-}, 1000);
+  
+  axios.get('/api/notif/{{ auth()->user()->id  }}')
+        .then(response => {
+          notif.innerHTML = DataNotif(response.data.data);
+        })
+}, 3000);
 </script>
 @endauth
 @endsection

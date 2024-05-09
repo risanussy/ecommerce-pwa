@@ -11,6 +11,8 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('process');
+            $table->string('pay_method');
+            $table->string('expedisi');
             $table->integer('quantity');
             $table->integer('status');
             $table->integer('total'); // You might want to use integer or bigInteger depending on your requirements

@@ -7,28 +7,28 @@
   </div>
   <div class="px-5 py-3 rounded-3" style="background-color: gainsboro;">
     <div class="d-flex align-items-center">
-      <img src="{{ asset('img/plant-doodle.svg') }}" height="120px">
+      <img src="{{ asset('img/ilu.png') }}" class="me-3" height="120px">
       <div>
-        <h2>Selamat Datang Di GreenPlace</h2>
-        <p>Belanjaan kebutuhan dan hijaukan sekitar anda bersama kami</p>
+        <h2><span class="fw-light fs-3">Selamat Datang Di</span><br>Koperasi Bayu Karya</h2>
+        <p>Silahkan Belanjan Kebutuhan Anda Bersama Kami</p>
       </div>
     </div>
   </div>
-  <div class="d-flex justify-content-center mt-3 flex-wrap gap-5">
-    <div class="card bg-success text-center py-3 bg-opacity-10 border-0" style="width: 330px;">
-      <h4 class="text-success">10% Diskon sayur-sayuran segar</h4>
-      <p>Buruan sebelum ketinggalan diskonnya</p>
-      <img src="{{ asset('img/bahan/sayur.png') }}" width="160px" class="m-auto">
+  <div class="d-flex justify-content-between mt-3 flex-wrap gap-5">
+    <div class="card bg-info text-center py-3 bg-opacity-10 border-0"  style="width: 330px;">
+      <h4 class="text-info">Order kebutuhan anda sekarang</h4>
+      <p>Dengan Harga Terjangkau</p>
+      <img src="{{ asset('img/bahan/com.png') }}" width="160px" class="m-auto">
     </div>
     <div class="card bg-warning text-center py-3 bg-opacity-10 border-0" style="width: 330px;">
-      <h4 class="text-warning">Buah Import dan Local</h4>
-      <p>Lengkap piihannya pasar modern online</p>
-      <img src="{{ asset('img/bahan/buah.png') }}" width="160px" class="m-auto">
+      <h4 class="text-warning">Banyak barang yang bisa dipilih</h4>
+      <p>Banyak pilihannya di pasar modern online</p>
+      <img src="{{ asset('img/bahan/tool.png') }}" width="160px" class="m-auto">
     </div>
-    <div class="card bg-info text-center py-3 bg-opacity-10 border-0" style="width: 330px;">
-      <h4 class="text-info">Dikelola langsung oleh ahlinya</h4>
-      <p>Terjamin kualitas, harga murah dan aman</p>
-      <img src="{{ asset('img/bahan/susu.png') }}" width="160px" class="m-auto">
+    <div class="card bg-success text-center py-3 bg-opacity-10 border-0" style="width: 330px;">
+      <h4 class="text-success">Dapat Order melalui Whatsapp</h4>
+      <p>Bila barang habis ataupun tidak ada</p>
+      <img src="{{ asset('img/bahan/wab.png') }}" width="120px" class="m-auto">
     </div>
   </div>
   <div class="mt-5">
